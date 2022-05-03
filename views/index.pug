@@ -1,5 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  table
+    tr
+      td
+        strong Branches
+        ul.branches
+          for b in branches
+            li(class=(b === branch) ? "current" : "")
+              a(href="/switch/" + b)= b
+          li
+            hr
+            a(href="" class="fork") #[i.fa.fa-plus] Create branch
+      td
+        form(method="POST" action="/save")
+          if branch !== 'main'
+            input(type="button" value="Merge").merge
+          h1 #{branch}
+          textarea(name="markdown")= page
+          div
+            button Save
+  #diff
+    pre!= diff
+
