@@ -35,13 +35,13 @@ router.post('/save', async (req, res, next) => {
 });
 
 router.get('/create/:branch', async (req, res, next) => {
-  console.log(`co -b ${req.params.branch}`);
-  await git(`co -b ${req.params.branch}`);
+  console.log(`checkout -b ${req.params.branch}`);
+  await git(`checkout -b ${req.params.branch}`);
   res.redirect('/');
 });
 
 router.get('/switch/:branch', async (req, res, next) => {
-  await git(`co ${req.params.branch}`);
+  await git(`checkout ${req.params.branch}`);
   res.redirect('/');
 });
 
