@@ -77,7 +77,7 @@ function getPage(branch) {
 }
 
 async function getBranches() {
-  let branches = await git('branch -a');
+  let branches = await git('branch');
   branches = branches.trim().split('\n').map(b => b.replace(/\*\s+/, '').trim());
 
   const first = 'main';
