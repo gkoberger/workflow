@@ -3,6 +3,7 @@ const util = require('util');
 const router = express.Router();
 const fs = require('fs');
 const exec = util.promisify(require('child_process').exec);
+const gitlog = require("gitlog").default;
 
 const file = '../test.git/test.md';
 
@@ -17,7 +18,16 @@ router.get('/', async (req, res, next) => {
 
   const diff = await git(`diff ${branch} main -- test.md`);
 
-  res.render('index', { title: 'Home', page, branches, diff, branch });
+  const options = {
+    repo: "../test.git/",
+    number: 20,
+    fields: ["hash", "abbrevHash", "subject", "authorName", "authorDateRel"],
+    //execOptions: { maxBuffer: 1000 * 1024 },
+  };
+
+  const commits = gitlog(options);
+
+  res.render('index', { title: 'Home', page, branches, diff, branch, commits });
 });
 
 async function git(command) {

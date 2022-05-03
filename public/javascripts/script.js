@@ -12,4 +12,8 @@ $.page('index', function() {
     $('#diff').lightbox_me();
     return false;
   });
+  $('.history').click(function() {
+    $('#history').lightbox_me();
+    return false;
+  });
 });

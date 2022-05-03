@@ -19,7 +19,16 @@ block content
           h1 #{branch}
           textarea(name="markdown")= page
           div
+            .pull-right
+              a.history(href="") #[i.fa.fa-clock] History
             button Save
   #diff
     pre!= diff
+  #history
+    for c in commits
+      div
+        strong= c.authorName
+        | &nbsp;
+        span= c.authorDateRel
+        span &nbsp;(#{c.abbrevHash})
 
