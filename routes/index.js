@@ -4,7 +4,7 @@ const router = express.Router();
 const fs = require('fs');
 const exec = util.promisify(require('child_process').exec);
 
-const file = '../git/test.md';
+const file = '../test.git/test.md';
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 });
 
 async function git(command) {
-  const opt = { cwd: '../git' };
+  const opt = { cwd: '../test.git' };
   const {stdout, stderr} = await exec(`git ${command}`, opt);
   return stdout;
 }
