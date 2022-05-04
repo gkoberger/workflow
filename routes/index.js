@@ -60,13 +60,25 @@ router.get('/diff/:branch', async (req, res, next) => {
   res.send(diff);
 });
 
+router.get('/merge/:branch', async (req, res, next) => {
+  await git(`checkout main`);
+  await git(`merge ${req.params.branch}`);
+  await git(`branch -D ${req.params.branch}`);
+  res.redirect('/');
+});
+
 router.get('/reset', async (req, res, next) => {
+  await git(`checkout main`);
+
   let branches = await getBranches();
   branches.forEach(async b => {
     if (b !== 'main') {
       await git(`branch -D ${b}`);
     }
   });
+
+  await git('update-ref -d refs/heads/main');
+  await git('commit -m "Initial commit"');
 
   res.redirect('/');
 });

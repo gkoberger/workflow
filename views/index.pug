@@ -12,11 +12,12 @@ block content
           li
             hr
             a(href="" class="fork") #[i.fa.fa-plus] Create branch
+          a(href="#").advanced Advanced
           input.repo(value="root@143.110.158.133:test.git")
       td
         form(method="POST" action="/save")
           if branch !== 'main'
-            input(type="button" value="Merge").merge
+            input(type="button" value="Diff").merge
           h1 #{branch}
           textarea(name="markdown")= page
           div
@@ -24,7 +25,9 @@ block content
               a.history(href="") #[i.fa.fa-clock] History
             button Save
   #diff
-    pre!= diff
+    pre
+      code.language-diff!= diff
+    a(href="/merge/" + branch) Merge into #[code main]
   #history
     for c in commits
       div

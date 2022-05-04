@@ -16,4 +16,11 @@ $.page('index', function() {
     $('#history').lightbox_me();
     return false;
   });
+
+  hljs.highlightAll();
+
+  $('.advanced').click(() => {
+    $('.advanced').hide();
+    $('.repo').show();
+  });
 });
