@@ -3,7 +3,7 @@ extends layout
 block content
   table
     tr
-      td
+      td.sidebar
         strong Branches
         ul.branches
           for b in branches
@@ -14,6 +14,15 @@ block content
             a(href="" class="fork") #[i.fa.fa-plus] Create branch
           a(href="#").advanced Advanced
           input.repo(value="root@143.110.158.133:test.git")
+      td.sidebar
+        strong Category
+        form(method="POST" action="/sidebar")
+          ul#sortable
+            for s in sidebar
+              li= s
+          textarea#sidebar-order(name="sidebar" style="display: none;")
+          button#sidebar-save(disabled) Save
+          a(href="#")#add.fa.fa-plus
       td
         form(method="POST" action="/save")
           if branch !== 'main'
@@ -27,12 +36,17 @@ block content
   #diff
     pre
       code.language-diff!= diff
+    pre
+      code.language-diff!= diffSidebar
     a(href="/merge/" + branch) Merge into #[code main]
   #history
     for c in commits
       div
         strong= c.authorName
         | &nbsp;
-        span= c.authorDateRel
-        span &nbsp;(#{c.abbrevHash})
+        span= c.subject
+        | &nbsp;
+        span.time= c.authorDateRel
+        span.time &nbsp;(#{c.abbrevHash})
 
+  a(href="/reset")#reset Reset
